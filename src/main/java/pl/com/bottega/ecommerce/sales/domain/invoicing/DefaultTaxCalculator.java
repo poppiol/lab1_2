@@ -35,4 +35,6 @@ public class DefaultTaxCalculator implements TaxCalculator {
         Money taxValue = net.multiplyBy(ratio);
         return new Tax(taxValue, desc);
     }
+
+
 }
