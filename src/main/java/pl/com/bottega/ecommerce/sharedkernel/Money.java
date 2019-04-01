@@ -27,7 +27,8 @@ public class Money {
 
     private String currencyCode;
 
-    protected Money() {}
+    protected Money() {
+    }
 
     public Money(BigDecimal denomination, Currency currency) {
         this(denomination, currency.getCurrencyCode());
@@ -91,7 +92,7 @@ public class Money {
 
     /**
      * @return currency from this object or otherCurrencyCode. Preferred is the one that comes from Money that has
-     *         non-zero value.
+     * non-zero value.
      */
     private Currency determineCurrencyCode(Money otherMoney) {
         String resultingCurrenctCode = isZero(denomination) ? otherMoney.currencyCode : currencyCode;
@@ -107,14 +108,23 @@ public class Money {
     }
 
     public boolean greaterThan(Money other) {
+        if (!compatibleCurrency(other)) {
+            throw new IllegalArgumentException("Currency mismatch");
+        }
         return denomination.compareTo(other.denomination) > 0;
     }
 
     public boolean lessThan(Money other) {
+        if (!compatibleCurrency(other)) {
+            throw new IllegalArgumentException("Currency mismatch");
+        }
         return denomination.compareTo(other.denomination) < 0;
     }
 
     public boolean lessOrEquals(Money other) {
+        if (!compatibleCurrency(other)) {
+            throw new IllegalArgumentException("Currency mismatch");
+        }
         return denomination.compareTo(other.denomination) <= 0;
     }
 
